@@ -2,16 +2,16 @@ sudo: required
 services: docker
 
 before_install:
-  - docker -t build ivillalba/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t ivillalba/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run ivillalba/react-test npm test --coverage
 
 after_success:
-  - docker -t build ivillalba/multi-client ./client
-  - docker -t build ivillalba/multi-server ./server
-  - docker -t build ivillalba/multi-worker ./worker
-  - docker -t build ivillalba/multi-nginx ./nginx
+  - docker build -t ivillalba/multi-client ./client
+  - docker build -t ivillalba/multi-server ./server
+  - docker build -t ivillalba/multi-worker ./worker
+  - docker build -t ivillalba/multi-nginx ./nginx
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push ivillalba/multi-client
   - docker push ivillalba/multi-server
